@@ -5,9 +5,9 @@ const Navbar = () => {
     <div>
         <nav className='mycontainer py-4 px-10 flex justify-between bg-slate-800 h-15 items-center text-white'>
             <div className="logo font-bold text-2xl">
-              <span className='text-green-700 '>&lt;</span>
+              <span className='text-green-500 '>&lt;</span>
               Pass
-              <span className='text-green-700 font-bold text-2xl'>OP/&gt;</span>
+              <span className='text-green-500 font-bold text-2xl'>OP/&gt;</span>
               </div>
             <ul className='flex gap-6'>
                 <li><a href="#">Home</a></li>
