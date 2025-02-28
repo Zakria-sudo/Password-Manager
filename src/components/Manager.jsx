@@ -4,6 +4,7 @@ const Manager = () => {
   const Btnref = useRef();
   const [form, setform] = useState({ site: "", username: "", password: "" });
   const [passArr, setpassArr] = useState([]);
+  const passRef = useRef();
 
   useEffect(() => {
     let passwords = localStorage.getItem("passwords");
@@ -15,8 +16,10 @@ const Manager = () => {
   const showPWD = () => {
     if (Btnref.current.src.includes("/icons/eye-slash-solid.svg")) {
       Btnref.current.src = "/icons/eye-solid.svg";
+      passRef.current.type = "text";
     } else {
       Btnref.current.src = "/icons/eye-slash-solid.svg";
+      passRef.current.type = "password";
     }
   };
 
@@ -29,6 +32,10 @@ const Manager = () => {
     setpassArr([...passArr, form]);
     localStorage.setItem("passwords", JSON.stringify([...passArr, form]));
     console.log([...passArr, form]);
+  };
+  
+  const copyText = (text) => {
+    navigator.clipboard.writeText(text);
   };
   return (
     <>
@@ -52,7 +59,7 @@ const Manager = () => {
             type="text"
             className="rounded-full border border-green-400   px-5 py-1"
             name="site"
-            required = {true}
+            required={true}
             value={form.site}
             onChange={handelChange}
           />
@@ -62,18 +69,19 @@ const Manager = () => {
               type="text"
               className="border w-full border-green-400 rounded-full  px-5 py-1"
               name="username"
-              required = {true}
+              required={true}
               value={form.username}
               onChange={handelChange}
             />
             <div className="relative">
               <input
                 placeholder="Enter Password"
-                type="text"
+                type="password"
+                ref={passRef}
                 className="border w-full border-green-400 rounded-full px-5 py-1"
                 name="password"
                 value={form.password}
-                required = {true}
+                required={true}
                 onChange={handelChange}
               />
               <span
@@ -84,7 +92,7 @@ const Manager = () => {
                   ref={Btnref}
                   src="/icons/eye-solid.svg"
                   alt=""
-                    
+                  width={20}
                 />
               </span>
             </div>
@@ -105,26 +113,63 @@ const Manager = () => {
         </div>
         <div className="passwords p-4">
           <h2 className="font-bold text-xl py-2">Your Passwords</h2>
-          {passArr.length ==0 && <div className=" text-md py-2">No Passwords Saved</div>}
-          {passArr.length !=0 && <table className="table-auto w-full rounded-md overflow-hidden">
-  <thead className="bg-green-800 text-white">
-    <tr>
-      <th className="py-2">Site</th>
-      <th className="py-2">Username</th>
-      <th className="py-2">Password</th>
-    </tr>
-  </thead>
-  <tbody className="bg-green-100">
-    {passArr.map((item)=>{
-      return <tr>
-      <td className="text-center w-15 py-2 underline text-blue-600 border border-white"><a href={item.site} target="_blank">{item.site}</a></td>
-      <td className="text-center w-15 py-2 border border-white">{item.username}</td>
-      <td className="text-center w-15 py-2 border border-white">{item.passwords}</td>
-    </tr>
-    })}
-  </tbody>
-</table>}
-          
+          {passArr.length == 0 && (
+            <div className=" text-md py-2">No Passwords Saved</div>
+          )}
+          {passArr.length != 0 && (
+            <table className="table-auto w-full rounded-md overflow-hidden">
+              <thead className="bg-green-800 text-white">
+                <tr>
+                  <th className="py-2">Site</th>
+                  <th className="py-2">Username</th>
+                  <th className="py-2">Password</th>
+                </tr>
+              </thead>
+              <tbody className="bg-green-100">
+                {passArr.map((item) => {
+                  return (
+                    <tr>
+                      <td className=" text-center w-15 py-2 underline text-blue-600 border border-white">
+                        <a href={item.site} target="_blank">
+                          {item.site}
+                        </a>
+                        <span className="absolute pl-2 pt-1 hover:cursor-pointer">
+                          <img
+                            src="/icons/copy-solid.svg"
+                            alt="copy"
+                            width={15}
+                            onClick={()=>copyText(item.site)}
+                          />
+                        </span>
+                      </td>
+                      <td className="text-center w-15 py-2 border border-white">
+                        {item.username}
+                        <span className="absolute pl-2 pt-1 hover:cursor-pointer">
+                          <img
+                            src="/icons/copy-solid.svg"
+                            alt="copy"
+                            width={15}
+                            onClick={()=>copyText(item.username)}
+                          />
+                        </span>
+                      </td>
+                      <td className="text-center w-15 py-2 border border-white">
+                        {item.password}
+                        <span className="absolute pl-2 pt-1 hover:cursor-pointer">
+                          <img
+                            src="/icons/copy-solid.svg"
+                            alt="copy"
+                            width={15}
+                            onClick={()=>copyText(item.password)}
+                          />
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </>
