@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Manager = () => {
   const Btnref = useRef();
@@ -33,12 +35,36 @@ const Manager = () => {
     localStorage.setItem("passwords", JSON.stringify([...passArr, form]));
     console.log([...passArr, form]);
   };
-  
+
   const copyText = (text) => {
+    toast('Copied to Clipboard!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+      });
     navigator.clipboard.writeText(text);
   };
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        
+      />
       <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-fuchsia-400 opacity-20 blur-[100px]"></div>
       </div>
@@ -138,7 +164,7 @@ const Manager = () => {
                             src="/icons/copy-solid.svg"
                             alt="copy"
                             width={15}
-                            onClick={()=>copyText(item.site)}
+                            onClick={() => copyText(item.site)}
                           />
                         </span>
                       </td>
@@ -149,7 +175,7 @@ const Manager = () => {
                             src="/icons/copy-solid.svg"
                             alt="copy"
                             width={15}
-                            onClick={()=>copyText(item.username)}
+                            onClick={() => copyText(item.username)}
                           />
                         </span>
                       </td>
@@ -160,7 +186,7 @@ const Manager = () => {
                             src="/icons/copy-solid.svg"
                             alt="copy"
                             width={15}
-                            onClick={()=>copyText(item.password)}
+                            onClick={() => copyText(item.password)}
                           />
                         </span>
                       </td>
