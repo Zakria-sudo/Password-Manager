@@ -11,14 +11,14 @@ const Navbar = () => {
         </div>
         <ul className="flex">
           <a href="https://github.com/Zakria-sudo" target="_blank">
-            <button className="bg-green-500 py-2 rounded-full cursor-pointer hover:bg-green-600">
+            <button className="bg-green-500 py-2 rounded-full cursor-pointer hover:bg-green-600 ring-white ring-1">
               <img
                 src="icons/github-brands.svg"
                 alt=""
                 className="w-20 h-10 invert"
               />
             </button>
-          </a>
+          </a>  
         </ul>
       </nav>
     </div>

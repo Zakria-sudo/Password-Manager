@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const Manager = () => {
   const Btnref = useRef();
@@ -31,10 +33,26 @@ const Manager = () => {
 
   const savePassword = () => {
     console.log(form);
-    setpassArr([...passArr, form]);
-    localStorage.setItem("passwords", JSON.stringify([...passArr, form]));
+    setpassArr([...passArr, {...form, id: uuidv4()}]);
+    localStorage.setItem("passwords", JSON.stringify([...passArr, {...form, id: uuidv4()}]));
     console.log([...passArr, form]);
+    // clearing after saving
+    setform({ site: "", username: "", password: "" });
   };
+  const editPassword = (id)=>{
+    
+    setform(passArr.find((item)=>item.id === id));
+    setpassArr(passArr.filter((item)=>item.id !== id));
+    
+  }
+  const deletePassword = (id)=>{
+    let c = confirm("Are you sure you want to delete this password?");
+    if(c){
+
+      setpassArr(passArr.filter((item)=>item.id !== id));
+      localStorage.setItem("passwords", JSON.stringify(passArr.filter((item)=>item.id !== id)));
+    }
+  }
 
   const copyText = (text) => {
     toast('Copied to Clipboard!', {
@@ -46,7 +64,6 @@ const Manager = () => {
       draggable: true,
       progress: undefined,
       theme: "dark",
-      
       });
     navigator.clipboard.writeText(text);
   };
@@ -133,7 +150,7 @@ const Manager = () => {
                 trigger="hover"
                 colors="primary:#121331,secondary:#000000"
               ></lord-icon>
-              Add Password
+              Save Password
             </button>
           </div>
         </div>
@@ -149,12 +166,14 @@ const Manager = () => {
                   <th className="py-2">Site</th>
                   <th className="py-2">Username</th>
                   <th className="py-2">Password</th>
+                  <th className="py-2">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-green-100">
                 {passArr.map((item) => {
                   return (
                     <tr>
+{/* Site td */}
                       <td className=" text-center w-15 py-2 underline text-blue-600 border border-white">
                         <a href={item.site} target="_blank">
                           {item.site}
@@ -168,6 +187,7 @@ const Manager = () => {
                           />
                         </span>
                       </td>
+{/* Username td */}
                       <td className="text-center w-15 py-2 border border-white">
                         {item.username}
                         <span className="absolute pl-2 pt-1 hover:cursor-pointer">
@@ -179,6 +199,7 @@ const Manager = () => {
                           />
                         </span>
                       </td>
+{/* Password td */}
                       <td className="text-center w-15 py-2 border border-white">
                         {item.password}
                         <span className="absolute pl-2 pt-1 hover:cursor-pointer">
@@ -189,6 +210,18 @@ const Manager = () => {
                             onClick={() => copyText(item.password)}
                           />
                         </span>
+                      </td>
+{/* Actions Td */}
+                      <td className="text-center w-15 py-2 border border-white">
+                        <div className="flex justify-center gap-4 items-center">
+
+                        <span className="hover:cursor-pointer">
+                          <img src="/icons/pen-to-square-solid.svg" alt="Edit" width={17} onClick={()=>{editPassword(item.id)}} />
+                        </span>
+                        <span className="hover:cursor-pointer">
+                        <img src="/icons/trash-solid.svg" alt="Delete" width={15} onClick={()=>{deletePassword(item.id)}}/>
+                        </span>
+                        </div>
                       </td>
                     </tr>
                   );
