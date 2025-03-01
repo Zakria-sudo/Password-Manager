@@ -15,7 +15,7 @@ const Navbar = () => {
               <img
                 src="icons/github-brands.svg"
                 alt=""
-                className="w-20 h-10 invert"
+                className="w-20 h-10 invert "
               />
             </button>
           </a>  
