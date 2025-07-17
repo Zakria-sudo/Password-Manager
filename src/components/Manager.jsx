@@ -31,7 +31,11 @@ const Manager = () => {
   };
 
   const savePassword = () => {
-    if(form.site.length>6 && form.username.length>3 && form.password.length>5){
+    if (
+      form.site.length > 6 &&
+      form.username.length > 3 &&
+      form.password.length > 5
+    ) {
       setpassArr([...passArr, { ...form, id: uuidv4() }]);
       localStorage.setItem(
         "passwords",
@@ -49,8 +53,7 @@ const Manager = () => {
         progress: undefined,
         theme: "dark",
       });
-    }
-    else{
+    } else {
       toast("Please fill all the fields correctly!", {
         position: "top-right",
         autoClose: 5000,
@@ -210,83 +213,86 @@ const Manager = () => {
           )}
           {passArr.length != 0 && (
             <div className="w-full overflow-x-auto">
-            <table className="table-auto w-full rounded-md overflow-hidden min-w-[600px]">
-              <thead className="bg-green-800 text-white">
-                <tr>
-                  <th className="py-2 px-4">Site</th>
-                  <th className="py-2 px-4">Username</th>
-                  <th className="py-2 px-4">Password</th>
-                  <th className="py-2 px-4">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-green-100">
-                {passArr.map((item) => (
-                  <tr key={item.id} className="border border-white">
-                    {/* Site Column */}
-                    <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
-                      <a href={item.site} target="_blank" className="underline text-blue-600">
-                        {item.site}
-                      </a>
-                      <span className="inline-block ml-2 hover:cursor-pointer">
-                        <img
-                          src="/icons/copy-solid.svg"
-                          alt="copy"
-                          width={15}
-                          onClick={() => copyText(item.site)}
-                        />
-                      </span>
-                    </td>
-                    {/* Username Column */}
-                    <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
-                      {item.username}
-                      <span className="inline-block ml-2 hover:cursor-pointer">
-                        <img
-                          src="/icons/copy-solid.svg"
-                          alt="copy"
-                          width={15}
-                          onClick={() => copyText(item.username)}
-                        />
-                      </span>
-                    </td>
-                    {/* Password Column */}
-                    <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
-                      {item.password}
-                      <span className="inline-block ml-2 hover:cursor-pointer">
-                        <img
-                          src="/icons/copy-solid.svg"
-                          alt="copy"
-                          width={15}
-                          onClick={() => copyText(item.password)}
-                        />
-                      </span>
-                    </td>
-                    {/* Actions Column */}
-                    <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
-                      <div className="flex justify-center gap-4 items-center">
-                        <span className="hover:cursor-pointer">
-                          <img
-                            src="/icons/pen-to-square-solid.svg"
-                            alt="Edit"
-                            width={17}
-                            onClick={() => editPassword(item.id)}
-                          />
-                        </span>
-                        <span className="hover:cursor-pointer">
-                          <img
-                            src="/icons/trash-solid.svg"
-                            alt="Delete"
-                            width={15}
-                            onClick={() => deletePassword(item.id)}
-                          />
-                        </span>
-                      </div>
-                    </td>
+              <table className="table-auto w-full rounded-md overflow-hidden min-w-[600px]">
+                <thead className="bg-green-800 text-white">
+                  <tr>
+                    <th className="py-2 px-4">Site</th>
+                    <th className="py-2 px-4">Username</th>
+                    <th className="py-2 px-4">Password</th>
+                    <th className="py-2 px-4">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          
+                </thead>
+                <tbody className="bg-green-100">
+                  {passArr.map((item) => (
+                    <tr key={item.id} className="border border-white">
+                      {/* Site Column */}
+                      <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
+                        <a
+                          href={item.site}
+                          target="_blank"
+                          className="underline text-blue-600"
+                        >
+                          {item.site}
+                        </a>
+                        <span className="inline-block ml-2 hover:cursor-pointer">
+                          <img
+                            src="/icons/copy-solid.svg"
+                            alt="copy"
+                            width={15}
+                            onClick={() => copyText(item.site)}
+                          />
+                        </span>
+                      </td>
+                      {/* Username Column */}
+                      <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
+                        {item.username}
+                        <span className="inline-block ml-2 hover:cursor-pointer">
+                          <img
+                            src="/icons/copy-solid.svg"
+                            alt="copy"
+                            width={15}
+                            onClick={() => copyText(item.username)}
+                          />
+                        </span>
+                      </td>
+                      {/* Password Column */}
+                      <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
+                        {item.password}
+                        <span className="inline-block ml-2 hover:cursor-pointer">
+                          <img
+                            src="/icons/copy-solid.svg"
+                            alt="copy"
+                            width={15}
+                            onClick={() => copyText(item.password)}
+                          />
+                        </span>
+                      </td>
+                      {/* Actions Column */}
+                      <td className="text-center py-2 px-4 border border-white whitespace-nowrap">
+                        <div className="flex justify-center gap-4 items-center">
+                          <span className="hover:cursor-pointer">
+                            <img
+                              src="/icons/pen-to-square-solid.svg"
+                              alt="Edit"
+                              width={17}
+                              onClick={() => editPassword(item.id)}
+                            />
+                          </span>
+                          <span className="hover:cursor-pointer">
+                            <img
+                              src="/icons/trash-solid.svg"
+                              alt="Delete"
+                              width={15}
+                              onClick={() => deletePassword(item.id)}
+                            />
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>
